@@ -13,7 +13,7 @@ Should you have one of the new M1 Macs, we recommend you use remote or mixed dev
 ## Easy Option: Remote Setup
 We have access credentials to our servers printed. On it, you'll find the domain you should connect to, as well as a password.
 
-The server runs a headless instance of VS-Code, setup with rust-analyzer. To access it, go to `http://YOUR_ID.workshop.neodyme.io` and enter your password. Multiple users will be able to access the same instance with shared code, but the live collaboration features are limited.
+The server runs a headless instance of VS-Code, setup with rust-analyzer. To access it, go to `https://YOUR_ID.workshop.neodyme.io` and enter your password. Multiple users will be able to access the same instance with shared code, but the live collaboration features are limited.
 
 If you are using Chrome, the usual VS-Code shortcuts will work. Firefox is a bit more restrictive, and you might have to use the menu instead of some shortcuts.
 
@@ -64,9 +64,12 @@ It is possible to use remove-development with VS-Code via the [Remote Developmen
 4. Enter `Remote-SSH: Connect to Host...`
 5. Enter the user and address of your assigned instance, eg `user@1.workshop.neodyme.io`
 6. Enter your password when prompted
-7. Click `Open Folder` and open the workspace at `/work`
-8. The workspace will open. You'll operate on the same files as you would via the fully-remote setup.
-9. Install the Rust-Analyzer extension on the remote.
+7. Open a terminal (on the remote)
+8. Execute: `echo "export PATH=$PATH:/usr/local/cargo/bin" >~/.bashrc`
+9. Terminate the connection and reconnect via VSCode
+10. Click `Open Folder` and open the workspace at `/work`
+11. The workspace will open. You'll operate on the same files as you would via the fully-remote setup.
+12. Install the Rust-Analyzer extension on the remote.
 
 ## Compiling the contracts and running the exploits
 
