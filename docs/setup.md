@@ -65,7 +65,7 @@ It is possible to use remove-development with VS-Code via the [Remote Developmen
 5. Enter the user and address of your assigned instance, eg `user@1.workshop.neodyme.io`
 6. Enter your password when prompted
 7. Open a terminal (on the remote)
-8. Execute: `echo "export PATH=$PATH:/usr/local/cargo/bin" >~/.bashrc`
+8. Execute: `echo 'eval $(tr "\0" "\n" < /proc/1/environ | sed -re "s@^@export @")' > ~/.bashrc`
 9. Terminate the connection and reconnect via VSCode
 10. Click `Open Folder` and open the workspace at `/work`
 11. The workspace will open. You'll operate on the same files as you would via the fully-remote setup.
