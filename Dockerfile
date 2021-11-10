@@ -17,5 +17,7 @@ COPY . /work
 RUN chown -R user:user /work
 USER 1000
 
+RUN echo 'eval $(tr "\0" "\n" < /proc/1/environ | sed -re "s@^@export @")' > /home/user/.bashrc
+
 # cargo run --bin <contract>
 CMD while :; do :; done & kill -STOP $! && wait $!
