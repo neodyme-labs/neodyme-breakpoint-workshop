@@ -1,4 +1,9 @@
-# Solution - Missing signer check
+# Solution - Missing Signer Check
+
+The vulnerability in this contract is a missing signer check in the withdraw function:
+
+The wallet authority does not have to sign the execution of the instruction. This has the effect, that everybody can pretend to be the authority.
+
 
 ```rust
 use borsh::BorshSerialize;
@@ -24,4 +29,12 @@ fn hack(env: &mut LocalEnvironment, challenge: &Challenge) {
     );
     tx.print_named("haxx");
 }
+```
+
+# Mitigation
+
+By adding a check in the `withdraw` function, to check if the `wallet_info` is signed this vulnerability can be prevented:
+
+```rust
+assert!(authority_info.is_signer);
 ```

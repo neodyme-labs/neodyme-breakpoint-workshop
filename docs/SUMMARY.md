@@ -4,7 +4,7 @@
 - [Workshop](workshop.md)
 - [Setup](setup.md)
 - [PoC Framework](poc_framework.md)
-- [Level 0 - A first vulnerability Presentation](level0.md)
+- [Level 0 - A First Vulnerability - Presentation](level0.md)
   - [Solution](level0-solution.md))
 - [Level 1 - Personal Vault](level1.md)
   - [Hint 1](level1-hint1.md)

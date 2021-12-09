@@ -42,3 +42,11 @@ fn hack(env: &mut LocalEnvironment, challenge: &Challenge) {
 }
 
 ```
+
+# Mitigation
+
+By adding a check in the `withdraw` function, to check if the program itself is the owner of the `wallet_info` this vulnerability can be prevented:
+
+```rust
+assert_eq!(wallet_info.owner, _program_id);
+```

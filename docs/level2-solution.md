@@ -7,8 +7,8 @@ The vulnerability in this contract is an overflow/underflow in the deposit funct
     **destination_info.lamports.borrow_mut() += amount;
 ```
 
-For a large `amount` the `u64` lamports overflow/underflow. If an attacker sets `wallet_info` to the hackers-wallet and `destination_info` to the rich-boi-wallet, he can underflow the `wallet_info` and therefore increase his lamports. On the other hand he can overflow the `destination_info` and therefore decrease the destination lamports. 
-See https://play.rust-lang.org/?version=stable&mode=release&edition=2021&gist=c446a40de01a3af7957817ebe199237a
+Remember that lamports are fractions of SOL. For a large `amount` the `u64` lamports overflow/underflow. If an attacker sets `wallet_info` to the hacker's wallet and `destination_info` to the rich-boi-wallet, they can underflow the `wallet_info` and therefore increase his lamports. Alternatively, they can overflow the `destination_info` and therefore decrease the destination lamports. 
+See [here](https://play.rust-lang.org/?version=stable&mode=release&edition=2021&gist=c446a40de01a3af7957817ebe199237a).
 
 There is one more trick to it, as there is a rent check: 
 ```rs
@@ -20,7 +20,7 @@ There is one more trick to it, as there is a rent check:
 But this only limits the maximum amount stolen per iteration to min_balance lamports.
 
 
-example solution by Thomas:
+Here is the example exploit code that Thomas, one of our colleagues, wrote:
 
 ```rust
 use borsh::BorshSerialize;
@@ -82,5 +82,21 @@ fn hack(env: &mut LocalEnvironment, challenge: &Challenge) {
         &[&challenge.hacker],
     );
     tx.print_named("hacker withdraw");
+}
+```
+
+# Mitigation
+
+By replacing the math with checked math in the `withdraw` function, this vulnerability can be prevented:
+
+```rust
+{
+    let mut wallet_info_lapmorts = wallet_info.lamports.borrow_mut();
+    **wallet_info_lapmorts = (**wallet_info_lapmorts).checked_sub(amount).unwrap();
+}
+
+{
+    let mut destination_info_lapmorts = destination_info.lamports.borrow_mut();
+    **destination_info_lapmorts = (**destination_info_lapmorts).checked_add(amount).unwrap();
 }
 ```

@@ -1,8 +1,8 @@
-# Solution - Account confusion
+# Solution - Account Confusion
 
-The vulnerability in this contract is called account-confusion. Outside of the solana contract this type of vulnerability is called *type confusion*. It happens whenever data is misinterpreted. Programs often have to rely on a certain data structure, often a user can not control the data directly for a certain type, but for another one. If a program has a type confusion bug, it expects, that the data cannot be user controlled, but it fails to check the type, therefore a malicious attacker trick the program to use the controlled data instead. For example in this instance an attacker can initialize a second vault and use the withdraw instruction with the vault account as a pool account.
+The vulnerability in this contract is called *account confusion*. Outside of solana smart contracts this type of vulnerability is called *type confusion*. It happens whenever data is misinterpreted. Programs often have to rely on a certain data structure, and it sometimes doesn’t verify the type of object it receives. Instead, it uses it blindly without type-checking. Users also often can not control the data directly for a certain type, but for another one they can. A type confusion bug can mean that a program expects that the data cannot be user controlled, but it fails to check the type, therefore a malicious attacker trick the program to use the controlled data instead. For example, in this instance an attacker can initialize a second vault and use the withdraw instruction with the vault account as a pool account.
 
-In this case, we confuse a `TipPool` with a `Vault`. The fields will overlap nicely:
+In this case, we confuse a `TipPool` with a `Vault`. The fields will overlap nicely resulting in e.g. the `TipPool.value` overlapping with the `Vault.fee`.
 
 ```rust
 pub struct TipPool {
@@ -21,7 +21,7 @@ pub struct Vault {
 
 Another thing that may be tricky to wrap your head around is that the program can be initialized twice, PDAs can be derived by a different seed result in different addresses, while in this case this is totally intended, there can be some cases, where not knowing this can lead to serious vulnerabilities.
 
-example solution by Felipe (author):
+Here is the example exploit code that Felipe, one of our colleagues, wrote:
 
 ```rust
 fn hack(env: &mut LocalEnvironment, challenge: &Challenge) {
@@ -57,3 +57,7 @@ fn hack(env: &mut LocalEnvironment, challenge: &Challenge) {
     .print();
 }
 ```
+
+# Mitigation
+
+By adding a type attribute to all accounts, this vulnerability can be prevented (details [here](https://blog.neodyme.io/posts/solana_common_pitfalls#solana-account-confusions)).
