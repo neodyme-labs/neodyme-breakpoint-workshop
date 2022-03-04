@@ -6,7 +6,7 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-poc-framework = { version = "0.1.2" }
+poc-framework = { version = "0.1.5" }
 level0 = { path = "../level0", features = ["no-entrypoint"] }
 level1 = { path = "../level1", features = ["no-entrypoint"] }
 level2 = { path = "../level2", features = ["no-entrypoint"] }
@@ -19,5 +19,6 @@ borsh-derive = "0.9.1"
 spl-token = { version = "*", features = ["no-entrypoint"] }
 
 owo-colors = "3.1.0"
+solana-logger = "1.8.2"
 
 [lib]
