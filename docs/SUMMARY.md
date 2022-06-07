@@ -25,3 +25,6 @@
   - [Solution](level4-solution.md)
 
 [Resources](resources.md)
+
+---
+[Legal Notice](legal-notice.md)
