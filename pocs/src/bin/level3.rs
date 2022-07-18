@@ -9,7 +9,6 @@ use poc_framework::{
 };
 use solana_program::native_token::lamports_to_sol;
 
-use pocs::assert_tx_success;
 use solana_program::{native_token::sol_to_lamports, pubkey::Pubkey, system_program};
 
 #[allow(dead_code)]
@@ -132,7 +131,7 @@ fn setup() -> (LocalEnvironment, Challenge, Internal) {
     let vault_address = Pubkey::create_program_address(&[&[seed]], &tip_program).unwrap();
 
     // Create Vault
-    assert_tx_success(env.execute_as_transaction(
+    env.execute_as_transaction(
         &[level3::initialize(
             tip_program,
             vault_address,
@@ -142,14 +141,14 @@ fn setup() -> (LocalEnvironment, Challenge, Internal) {
             vault_address,
         )],
         &[&initizalizer],
-    ));
+    ).assert_success();
 
     println!("[*] Vault created!");
 
     // Create Pool
     env.create_account_rent_excempt(&tip_pool, TIP_POOL_LEN as usize, tip_program);
 
-    assert_tx_success(env.execute_as_transaction(
+    env.execute_as_transaction(
         &[level3::create_pool(
             tip_program,
             vault_address,
@@ -157,11 +156,11 @@ fn setup() -> (LocalEnvironment, Challenge, Internal) {
             tip_pool.pubkey(),
         )],
         &[&poor_boi],
-    ));
+    );
     println!("[*] Pool created!");
 
     // rich boi tips pool
-    assert_tx_success(env.execute_as_transaction(
+    env.execute_as_transaction(
         &[level3::tip(
             tip_program,
             vault_address,
@@ -170,7 +169,7 @@ fn setup() -> (LocalEnvironment, Challenge, Internal) {
             a_lot_of_money,
         )],
         &[&rich_boi],
-    ));
+    );
     println!("[*] rich boi tipped poor bois pool!");
 
     (

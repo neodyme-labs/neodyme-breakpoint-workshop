@@ -7,7 +7,6 @@ use poc_framework::{
 };
 use solana_program::native_token::lamports_to_sol;
 
-use pocs::assert_tx_success;
 use solana_program::{native_token::sol_to_lamports, pubkey::Pubkey, system_program};
 
 struct Challenge {
@@ -118,18 +117,18 @@ fn setup() -> (LocalEnvironment, Challenge, Internal) {
     let wallet_address = level1::get_wallet_address(wallet_authority.pubkey(), wallet_program);
 
     // Create Wallet
-    assert_tx_success(env.execute_as_transaction(
+    env.execute_as_transaction(
         &[level1::initialize(
             wallet_program,
             wallet_authority.pubkey(),
         )],
         &[&wallet_authority],
-    ));
+    ).assert_success();
 
     println!("[*] Wallet created!");
 
     // rich boi pays for bill
-    assert_tx_success(env.execute_as_transaction(
+    env.execute_as_transaction(
         &[level1::deposit(
             wallet_program,
             wallet_authority.pubkey(),
@@ -137,7 +136,7 @@ fn setup() -> (LocalEnvironment, Challenge, Internal) {
             a_lot_of_money,
         )],
         &[&rich_boi],
-    ));
+    ).assert_success();
     println!("[*] rich boi payed his bills");
 
     (
