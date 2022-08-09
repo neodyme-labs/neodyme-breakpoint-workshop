@@ -7,7 +7,8 @@ deploy_job:
   stage: deploy
 
   before_script:
-    - apk update && apk add openssh-client rsync musl-dev
+    - apk update && apk add openssh-client rsync musl-dev tzdata
+    - cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | base64 -d | ssh-add -
 
