@@ -48,12 +48,21 @@ or
 thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: "No such file or directory" }', /home/user/.cargo/registry/src/github.com-1ecc6299db9ec823/poc-framework-0.1.2/src/lib.rs:522:81
 ```
 
-then the contract failed to build. This is likely caused by a too old Rust or Solana toolchain. Ensure you have the latest versions by running:
+then the contract failed to build. This is likely caused by a too old or too new Rust or Solana toolchain. After installing a recent version of rustup and the Solana toolchain, ensure you select the correct versions by running:
 
 ```sh
-rustup default stable
-rustup update
-solana-install init 1.7.17
+rustup toolchain install 1.56 --profile minimal
+rustup default 1.56
+
+mkdir -p ~/.local/share/solana/install/releases/1.8.14
+cd ~/.local/share/solana/install/releases/1.8.14
+curl -LO https://github.com/solana-labs/solana/releases/download/v1.8.14/solana-release-x86_64-unknown-linux-gnu.tar.bz2
+tar xf solana-release-x86_64-unknown-linux-gnu.tar.bz2
+rm solana-release-x86_64-unknown-linux-gnu.tar.bz2
+
+cd ~/.local/share/solana/install
+rm active_release
+ln -s releases/1.8.14/solana-release active_release
 ```
 
 
