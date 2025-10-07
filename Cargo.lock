@@ -2098,9 +2098,9 @@ checksum = "b4596b6d070b27117e987119b4dac604f3c58cfb0b191112e24771b2faeac1a6"
 
 [[package]]
 name = "poc-framework"
-version = "0.1.5"
+version = "0.1.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4dd6493536697daf4b8f2e6943489a41be62ded494d8bc122793fd3a2e7311c5"
+checksum = "ea91b30985e94892ce1d48131382f5fe08b168f617eab0492b98040e6f824afa"
 dependencies = [
  "bincode",
  "borsh",
@@ -2117,20 +2117,17 @@ dependencies = [
  "solana-client",
  "solana-compute-budget-program",
  "solana-config-program",
- "solana-ed25519-program",
  "solana-faucet",
  "solana-logger",
  "solana-program",
  "solana-runtime",
  "solana-sdk",
- "solana-secp256k1-program",
  "solana-stake-program",
  "solana-transaction-status",
  "solana-vote-program",
  "spl-associated-token-account",
  "spl-memo",
  "spl-token",
- "tempfile",
 ]
 
 [[package]]
