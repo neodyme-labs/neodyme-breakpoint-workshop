@@ -1,6 +1,6 @@
 # Solution - Overflow/Underflow
 
-The vulnerability in this contract is an overflow/underflow in the deposit function:
+The vulnerability in this contract is an overflow/underflow in the withdraw function:
 
 ```rs
     **wallet_info.lamports.borrow_mut() -= amount;
